@@ -198,21 +198,26 @@ body {
 .registration-form {
     max-width: 600px;
     margin: 0 auto;
-    background: white;
+    background: rgba(255, 255, 255, 0.15); /* Glassmorphism effect */
+    backdrop-filter: blur(10px);
     padding: 3rem;
     border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
 }
 
-.form-group {
-    margin-bottom: 1.5rem;
+.registration-form:hover {
+    transform: translateY(-5px);
 }
 
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-color);
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .form-group input,
@@ -223,12 +228,15 @@ body {
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.2); /* Semi-transparent input fields */
+    color: var(--text-color);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: var(--accent-color);
     outline: none;
+    box-shadow: 0 0 10px rgba(255, 23, 68, 0.4);
 }
 
 .radio-group {
@@ -239,10 +247,11 @@ body {
 
 .radio-group label {
     margin-right: 2rem;
+    color: var(--text-color);
 }
 
 .btn {
-    background: var(--accent-color);
+    background: linear-gradient(135deg, #ff5252, #ffca28);
     border: none;
     color: white;
     padding: 1rem 2.5rem;
@@ -252,12 +261,26 @@ body {
     cursor: pointer;
     width: 100%;
     margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .btn:hover {
-    background: #d90429;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(239, 35, 60, 0.2);
+    background: linear-gradient(135deg, #ff1744, #ff9100);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 23, 68, 0.3);
+}
+
+/* Form Title */
+.registration-form h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(45deg, #ff5252, #ffca28);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hidden {
@@ -363,4 +386,126 @@ body {
     100% {
         background-position: 0% 50%;
     }
+}
+
+:root {
+    --primary-color: #1f2233; /* Slightly darker navy */
+    --accent-color: #ff1744; /* Brighter red for more contrast */
+    --secondary-color: #7986ac; /* Slightly muted blue-gray */
+    --text-color: #1c1e2b; /* Darker for better readability */
+    --bg-color: #f9f9f9; /* Softer background for a modern feel */
+    --section-bg: #e3e6ed; /* More contrast for section backgrounds */
+    --gradient-opacity: 1;
+    --accent-color-rgb: 255, 23, 68;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(31, 34, 51, 0.9), rgba(121, 134, 172, 0.8));
+}
+
+.hero-content h1 {
+    color: #ffffff;
+}
+
+.tagline {
+    background: linear-gradient(45deg, #ff5252, #ffca28);
+}
+
+.btn {
+    background: var(--accent-color);
+}
+
+.btn:hover {
+    background: #c51162; /* Darker pinkish-red for better contrast */
+}
+
+.footer {
+    background: var(--primary-color);
+}
+
+.footer-section h3 {
+    color: #ff5252;
+}
+
+.footer-section a:hover {
+    color: #ff5252;
+}
+
+.tagline {
+    font-family: 'Space Grotesk', 'Arial', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    text-align: center;
+    animation: gradientFlow 3s ease infinite;
+    
+    background: linear-gradient(45deg, #ff5252, #ffca28);
+    background-size: 200% 200%;
+    background-position: center;
+    
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(31, 34, 51, 0.95); /* Darker primary color */
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.logo a {
+    color: #ff1744; /* Accent color */
+}
+
+.nav-links a {
+    color: #ffffff; /* White text for better contrast */
+}
+
+.nav-links a::before,
+.nav-links a::after {
+    background-color: #ff1744; /* Accent color underline */
+}
+
+.login-btn {
+    background: #ff1744;
+    color: white !important;
+}
+
+.login-btn:hover {
+    background: #1f2233;
+}
+
+
+/* Ensure full-page layout */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Allow content to push the footer down */
+.section {
+    flex: 1; /* This pushes the footer to the bottom */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
+/* Make footer stick to the bottom */
+.footer {
+    margin-top: auto;
 }
