@@ -49,7 +49,8 @@ app.use('/admin', adminRouter);
 
 // 404 Handler
 app.use((req, res, next) => {
-    res.status(404).render('404', { title: 'Page Not Found' });
+    // res.status(404).render('404', { title: 'Page Not Found' });
+    res.redirect('/');
 });
 
 // Error handling middleware
