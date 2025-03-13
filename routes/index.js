@@ -10,14 +10,15 @@ router.get('/', (req, res) => {
 // Registration Form
 router.get('/register', (req, res) => {
     res.render('register');
-    });
+});
 
-    // Handle Registration
-    router.post('/register', async (req, res) => {
+// Handle Registration
+router.post('/register', async (req, res) => {
     try {
         const newUser = new User({
-        ...req.body,
-        isLpuStudent: req.body.isLpuStudent === 'yes'
+            ...req.body,
+            isLpuStudent: req.body.isLpuStudent === 'yes',
+            teamMembers: req.body.teamMembers || [] // Handle team members
         });
         
         await newUser.save();
@@ -25,7 +26,7 @@ router.get('/register', (req, res) => {
     } catch (error) {
         res.status(400).send("Registration failed: " + error.message);
     }
-    });
+});
 
 // Payment Page
 router.get('/payment', async (req, res) => {

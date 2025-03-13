@@ -34,6 +34,14 @@
                     <p><strong>LPU Student:</strong> <%= user.isLpuStudent ? 'Yes' : 'No' %></p>
                     <p><strong>Registration No:</strong> <%= user.registrationNo || 'N/A' %></p>
                     <p><strong>Participation Type:</strong> <%= user.participationType %></p>
+                    <% if (user.participationType === 'team' && user.teamMembers && user.teamMembers.length > 0) { %>
+                        <p><strong>Team Members:</strong></p>
+                        <ul>
+                            <% user.teamMembers.forEach(member => { %>
+                                <li><%= member %></li>
+                            <% }); %>
+                        </ul>
+                    <% } %>
                 </div>
                 <form action="/confirm-payment" method="POST">
                     <input type="hidden" name="userId" value="<%= user._id %>">

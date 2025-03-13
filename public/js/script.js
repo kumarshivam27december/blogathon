@@ -11,9 +11,11 @@ window.addEventListener('scroll', function () {
 // Toggle registration number field
 function toggleRegNo() {
     const regNoInput = document.getElementById('registrationNo');
+    const regNoGroup = document.getElementById('registrationNoGroup');
     const isLpu = document.getElementById('lpuYes')?.checked; // Use optional chaining
-    if (regNoInput && isLpu !== undefined) {
+    if (regNoInput && regNoGroup && isLpu !== undefined) {
         regNoInput.required = isLpu;
+        regNoGroup.style.display = isLpu ? 'block' : 'none';
     }
 }
 

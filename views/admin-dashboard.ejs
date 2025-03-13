@@ -205,18 +205,30 @@
                         <th>LPU Student</th>
                         <th>Registration No</th>
                         <th>Registered At</th>
+                        <th>Team Member</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% users.forEach(user => { %>
-                    <tr>
-                        <td><%= user.name %></td>
-                        <td><%= user.email %></td>
-                        <td><%= user.mobile %></td>
-                        <td><%= user.isLpuStudent ? 'Yes' : 'No' %></td>
-                        <td><%= user.registrationNo || 'N/A' %></td>
-                        <td><%= user.createdAt.toLocaleString() %></td>
-                    </tr>
+                        <tr>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.mobile %></td>
+                            <td><%= user.isLpuStudent ? 'Yes' : 'No' %></td>
+                            <td><%= user.registrationNo || 'N/A' %></td>
+                            <td><%= user.createdAt.toLocaleString() %></td>
+                            <td>
+                                <% if (user.participationType === 'team' && user.teamMembers && user.teamMembers.length > 0) { %>
+                                    <ul>
+                                        <% user.teamMembers.forEach(member => { %>
+                                            <li><%= member %></li>
+                                        <% }); %>
+                                    </ul>
+                                <% } else { %>
+                                    N/A
+                                <% } %>
+                            </td>
+                        </tr>
                     <% }); %>
                 </tbody>
             </table>
