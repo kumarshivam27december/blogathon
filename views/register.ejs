@@ -31,14 +31,17 @@
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" required>
                 </div>
+            
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
                 </div>
+            
                 <div class="form-group">
                     <label for="mobile">Mobile Number</label>
                     <input type="tel" id="mobile" name="mobile" required>
                 </div>
+            
                 <div class="form-group">
                     <label>Gender</label>
                     <div class="radio-group">
@@ -48,6 +51,7 @@
                         <label for="female">Female</label>
                     </div>
                 </div>
+            
                 <div class="form-group">
                     <label>Are you an LPU Student?</label>
                     <div class="radio-group">
@@ -57,31 +61,84 @@
                         <label for="lpuNo">No</label>
                     </div>
                 </div>
-                <div class="form-group" id="registrationNoGroup">
+            
+                <!-- Registration Number (Required for everyone) -->
+                <div class="form-group">
                     <label for="registrationNo">Registration Number</label>
-                    <input type="text" id="registrationNo" name="registrationNo">
+                    <input type="text" id="registrationNo" name="registrationNo" required>
                 </div>
+            
+                <!-- Accommodation -->
+                <div class="form-group">
+                    <label>Do you need accommodation?</label>
+                    <div class="radio-group">
+                        <input type="radio" id="accommodationYes" name="accommodation" value="yes" required>
+                        <label for="accommodationYes">Yes</label>
+                        <input type="radio" id="accommodationNo" name="accommodation" value="no">
+                        <label for="accommodationNo">No</label>
+                    </div>
+                </div>
+            
                 <div class="form-group">
                     <label>Participation Type</label>
                     <div class="radio-group">
-                        <input type="radio" id="solo" name="participationType" value="solo" required>
+                        <input type="radio" id="solo" name="participationType" value="solo" required onclick="toggleTeamFields()">
                         <label for="solo">Solo</label>
-                        <input type="radio" id="team" name="participationType" value="team">
+                        <input type="radio" id="team" name="participationType" value="team" onclick="toggleTeamFields()">
                         <label for="team">Team</label>
                     </div>
                 </div>
+            
+                <!-- Team Fields (Hidden initially) -->
                 <div id="teamFields" class="hidden">
                     <div class="form-group">
-                        <label for="teamMember1">Team Member 1</label>
-                        <input type="text" id="teamMember1" name="teamMembers[0]">
+                        <label for="teamName">Team Name</label>
+                        <input type="text" id="teamName" name="teamName">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="teamMember1">Team Member 1 Name</label>
+                        <input type="text" id="teamMember1" name="teamMembers[0][name]">
                     </div>
                     <div class="form-group">
-                        <label for="teamMember2">Team Member 2</label>
-                        <input type="text" id="teamMember2" name="teamMembers[1]">
+                        <label for="teamMember1Phone">Team Member 1 Phone</label>
+                        <input type="tel" id="teamMember1Phone" name="teamMembers[0][phone]">
+                    </div>
+                    <div class="form-group">
+                        <label for="teamMember1Reg">Team Member 1 Registration No</label>
+                        <input type="text" id="teamMember1Reg" name="teamMembers[0][registrationNo]">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="teamMember2">Team Member 2 Name</label>
+                        <input type="text" id="teamMember2" name="teamMembers[1][name]">
+                    </div>
+                    <div class="form-group">
+                        <label for="teamMember2Phone">Team Member 2 Phone</label>
+                        <input type="tel" id="teamMember2Phone" name="teamMembers[1][phone]">
+                    </div>
+                    <div class="form-group">
+                        <label for="teamMember2Reg">Team Member 2 Registration No</label>
+                        <input type="text" id="teamMember2Reg" name="teamMembers[1][registrationNo]">
                     </div>
                 </div>
+            
                 <button type="submit" class="btn primary-btn">Complete Registration</button>
             </form>
+            
+            <script>
+            function toggleTeamFields() {
+                const teamFields = document.getElementById("teamFields");
+                const teamRadio = document.getElementById("team");
+            
+                if (teamRadio.checked) {
+                    teamFields.classList.remove("hidden");
+                } else {
+                    teamFields.classList.add("hidden");
+                }
+            }
+            </script>
+            
         </div>
     </section>
 

@@ -34,12 +34,13 @@
                     <p><strong>Gender:</strong> <%= user.gender %></p>
                     <p><strong>LPU Student:</strong> <%= user.isLpuStudent ? 'Yes' : 'No' %></p>
                     <p><strong>Registration No:</strong> <%= user.registrationNo || 'N/A' %></p>
+                    <p><strong>Accommodation:</strong> <%= user.accommodation || 'N/A' %></p> <!-- Display accommodation -->
                     <p><strong>Participation Type:</strong> <%= user.participationType %></p>
                     <% if (user.participationType === 'team' && user.teamMembers && user.teamMembers.length > 0) { %>
                         <p><strong>Team Members:</strong></p>
                         <ul>
                             <% user.teamMembers.forEach(member => { %>
-                                <li><%= member %></li>
+                                <li><%= member.name %> - <%= member.phone %> - <%= member.registrationNo %></li>
                             <% }); %>
                         </ul>
                     <% } %>
