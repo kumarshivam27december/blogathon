@@ -12,6 +12,16 @@ router.get('/about', (req, res) => {
   res.render('about');
 });
 
+// About Page
+router.get('/rules', (req, res) => {
+  res.render('rules');
+});
+
+
+router.get('/contact', (req, res) => {
+  res.render('contact');
+});
+
 // Registration Form
 router.get('/register', (req, res) => {
   res.render('register');

@@ -1,4 +1,3 @@
-
 require('dotenv').config(); // Load environment variables from .env file
 
 const express = require('express');
@@ -41,12 +40,41 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Import models
+const User = require('./models/User'); // Your existing User schema
+const Contact = require('./models/Contact'); // New Contact schema
+
 // Routes
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin');
 
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
+
+// New route for handling contact form submissions
+app.post('/contact', async (req, res) => {
+    try {
+        const { name, email, phone, subject, message } = req.body;
+
+        // Create a new contact document
+        const newContact = new Contact({
+            name,
+            email,
+            phone,
+            subject,
+            message
+        });
+
+        // Save the document to the database
+        await newContact.save();
+
+        // Send a success response
+        res.status(200).json({ message: 'Thank you for your message. We will get back to you soon!' });
+    } catch (error) {
+        console.error('Error saving contact form data:', error);
+        res.status(500).json({ message: 'An error occurred while submitting your message. Please try again later.' });
+    }
+});
 
 // 404 Handler
 app.use((req, res, next) => {
