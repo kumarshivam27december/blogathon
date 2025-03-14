@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const nodemailer = require('nodemailer'); // Import Nodemailer
 
 const app = express();
 const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 3000
@@ -51,6 +52,15 @@ const adminRouter = require('./routes/admin');
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 
+// Nodemailer configuration
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // Use Gmail as the email service
+    auth: {
+        user: process.env.EMAIL_USER, // Your Gmail email address
+        pass: process.env.EMAIL_PASSWORD // Your Gmail app password
+    }
+});
+
 // New route for handling contact form submissions
 app.post('/contact', async (req, res) => {
     try {
@@ -68,10 +78,34 @@ app.post('/contact', async (req, res) => {
         // Save the document to the database
         await newContact.save();
 
+        // Send an email to yourself
+        const mailOptions = {
+            from: process.env.EMAIL_USER, // Sender email
+            to: process.env.EMAIL_USER, // Your email address
+            subject: `New Contact Form Submission: ${subject}`,
+            text: `
+                Name: ${name}
+                Email: ${email}
+                Phone: ${phone}
+                Subject: ${subject}
+                Message: ${message}
+            `,
+            html: `
+                <h1>New Contact Form Submission</h1>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone}</p>
+                <p><strong>Subject:</strong> ${subject}</p>
+                <p><strong>Message:</strong> ${message}</p>
+            `
+        };
+
+        await transporter.sendMail(mailOptions);
+
         // Send a success response
         res.status(200).json({ message: 'Thank you for your message. We will get back to you soon!' });
     } catch (error) {
-        console.error('Error saving contact form data:', error);
+        console.error('Error saving contact form data or sending email:', error);
         res.status(500).json({ message: 'An error occurred while submitting your message. Please try again later.' });
     }
 });
