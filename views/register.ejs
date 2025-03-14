@@ -7,6 +7,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .radio-group {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -27,21 +51,25 @@
         <div class="container">
             <h2>Register Now</h2>
             <form class="registration-form" action="/register" method="POST">
+                <!-- Name -->
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" required>
                 </div>
-            
+
+                <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" required>
                 </div>
-            
+
+                <!-- Mobile -->
                 <div class="form-group">
                     <label for="mobile">Mobile Number</label>
                     <input type="tel" id="mobile" name="mobile" required>
                 </div>
-            
+
+                <!-- Gender -->
                 <div class="form-group">
                     <label>Gender</label>
                     <div class="radio-group">
@@ -51,7 +79,8 @@
                         <label for="female">Female</label>
                     </div>
                 </div>
-            
+
+                <!-- LPU Student -->
                 <div class="form-group">
                     <label>Are you an LPU Student?</label>
                     <div class="radio-group">
@@ -61,13 +90,13 @@
                         <label for="lpuNo">No</label>
                     </div>
                 </div>
-            
-                <!-- Registration Number (Required for everyone) -->
+
+                <!-- Registration Number -->
                 <div class="form-group">
                     <label for="registrationNo">Registration Number</label>
                     <input type="text" id="registrationNo" name="registrationNo" required>
                 </div>
-            
+
                 <!-- Accommodation -->
                 <div class="form-group">
                     <label>Do you need accommodation?</label>
@@ -78,24 +107,25 @@
                         <label for="accommodationNo">No</label>
                     </div>
                 </div>
-            
+
+                <!-- Participation Type -->
                 <div class="form-group">
                     <label>Participation Type</label>
                     <div class="radio-group">
-                        <input type="radio" id="solo" name="participationType" value="solo" required onclick="toggleTeamFields()">
+                        <input type="radio" id="solo" name="participationType" value="solo" required onclick="toggleFields()">
                         <label for="solo">Solo</label>
-                        <input type="radio" id="team" name="participationType" value="team" onclick="toggleTeamFields()">
+                        <input type="radio" id="team" name="participationType" value="team" onclick="toggleFields()">
                         <label for="team">Team</label>
                     </div>
                 </div>
-            
+
                 <!-- Team Fields (Hidden initially) -->
                 <div id="teamFields" class="hidden">
                     <div class="form-group">
                         <label for="teamName">Team Name</label>
                         <input type="text" id="teamName" name="teamName">
                     </div>
-            
+
                     <div class="form-group">
                         <label for="teamMember1">Team Member 1 Name</label>
                         <input type="text" id="teamMember1" name="teamMembers[0][name]">
@@ -108,7 +138,7 @@
                         <label for="teamMember1Reg">Team Member 1 Registration No</label>
                         <input type="text" id="teamMember1Reg" name="teamMembers[0][registrationNo]">
                     </div>
-            
+
                     <div class="form-group">
                         <label for="teamMember2">Team Member 2 Name</label>
                         <input type="text" id="teamMember2" name="teamMembers[1][name]">
@@ -122,23 +152,28 @@
                         <input type="text" id="teamMember2Reg" name="teamMembers[1][registrationNo]">
                     </div>
                 </div>
-            
-                <button type="submit" class="btn primary-btn">Complete Registration</button>
+
+                <!-- Consent Section (Hidden initially) -->
+                <div id="consentSection" class="hidden">
+                    <div class="form-group">
+                        <p>
+                            I agree to participate solo in Type Till Sunrise and accept the following:
+                            <ul>
+                                <li>I will be randomly paired with other solo participants if required.</li>
+                                <li>I will cooperate with my assigned team, and refusal may lead to disqualification.</li>
+                                <li>I have read and accept all event rules.</li>
+                            </ul>
+                        </p>
+                        <label>
+                            <input type="checkbox" id="consentCheckbox" name="consentCheckbox">
+                            I agree to the terms and conditions.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" id="submitButton" class="btn primary-btn" disabled>Complete Registration</button>
             </form>
-            
-            <script>
-            function toggleTeamFields() {
-                const teamFields = document.getElementById("teamFields");
-                const teamRadio = document.getElementById("team");
-            
-                if (teamRadio.checked) {
-                    teamFields.classList.remove("hidden");
-                } else {
-                    teamFields.classList.add("hidden");
-                }
-            }
-            </script>
-            
         </div>
     </section>
 
@@ -172,6 +207,38 @@
         </div>
     </footer>
 
-    <script src="/js/script.js"></script>
+    <script>
+        function toggleFields() {
+            const teamFields = document.getElementById("teamFields");
+            const consentSection = document.getElementById("consentSection");
+            const teamRadio = document.getElementById("team");
+            const soloRadio = document.getElementById("solo");
+            const submitButton = document.getElementById("submitButton");
+            const consentCheckbox = document.getElementById("consentCheckbox");
+
+            if (teamRadio.checked) {
+                // Hide consent section and enable submit button for team participants
+                teamFields.classList.remove("hidden");
+                consentSection.classList.add("hidden");
+                submitButton.disabled = false;
+            } else if (soloRadio.checked) {
+                // Show consent section and disable submit button until checkbox is checked
+                teamFields.classList.add("hidden");
+                consentSection.classList.remove("hidden");
+                submitButton.disabled = true;
+            }
+        }
+
+        // Add event listener to the consent checkbox
+        document.getElementById("consentCheckbox").addEventListener("change", function () {
+            const submitButton = document.getElementById("submitButton");
+            submitButton.disabled = !this.checked; // Enable/disable submit button based on checkbox state
+        });
+
+        // Initialize form fields on page load
+        document.addEventListener("DOMContentLoaded", function () {
+            toggleFields(); // Set initial state based on default selection
+        });
+    </script>
 </body>
 </html>
