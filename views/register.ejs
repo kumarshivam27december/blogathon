@@ -43,7 +43,6 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/rules">Rules</a></li>
                 <li><a href="/contact">Contact</a></li>
-
                 <li><a href="/register">Register</a></li>
                 <li><a href="/admin/login">Admin Login</a></li>
             </ul>
@@ -101,10 +100,10 @@
                 </div>
 
                 <!-- Accommodation -->
-                <div class="form-group">
+                <div id="accommodationGroup" class="form-group hidden">
                     <label>Do you need accommodation?</label>
                     <div class="radio-group">
-                        <input type="radio" id="accommodationYes" name="accommodation" value="yes" required>
+                        <input type="radio" id="accommodationYes" name="accommodation" value="yes">
                         <label for="accommodationYes">Yes</label>
                         <input type="radio" id="accommodationNo" name="accommodation" value="no">
                         <label for="accommodationNo">No</label>
@@ -234,6 +233,24 @@
             }
         }
 
+        function toggleAccommodation() {
+            const accommodationGroup = document.getElementById("accommodationGroup");
+            const lpuYes = document.getElementById("lpuYes");
+            const lpuNo = document.getElementById("lpuNo");
+
+            if (lpuYes.checked) {
+                // Hide accommodation field for LPU students
+                accommodationGroup.classList.add("hidden");
+            } else if (lpuNo.checked) {
+                // Show accommodation field for non-LPU students
+                accommodationGroup.classList.remove("hidden");
+            }
+        }
+
+        // Add event listeners for LPU student radio buttons
+        document.getElementById("lpuYes").addEventListener("change", toggleAccommodation);
+        document.getElementById("lpuNo").addEventListener("change", toggleAccommodation);
+
         // Add event listener to the consent checkbox
         document.getElementById("consentCheckbox").addEventListener("change", function () {
             const submitButton = document.getElementById("submitButton");
@@ -243,6 +260,7 @@
         // Initialize form fields on page load
         document.addEventListener("DOMContentLoaded", function () {
             toggleFields(); // Set initial state based on default selection
+            toggleAccommodation(); // Set initial state for accommodation field
         });
     </script>
 </body>
