@@ -7,9 +7,16 @@ const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer'); // Import Nodemailer
 const fs = require('fs'); // Import fs module for directory creation
+const Razorpay = require('razorpay'); // Import Razorpay SDK
 
 const app = express();
-const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 3000
+const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 5000
+
+// Razorpay configuration
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID, // Add your Razorpay key_id in .env
+    key_secret: process.env.RAZORPAY_KEY_SECRET, // Add your Razorpay key_secret in .env
+});
 
 // Database connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -118,6 +125,62 @@ app.post('/contact', async (req, res) => {
         console.error('Error saving contact form data or sending email:', error);
         res.status(500).json({ message: 'An error occurred while submitting your message. Please try again later.' });
     }
+});
+
+// Route to create a Razorpay order
+app.post('/create-order', async (req, res) => {
+    try {
+        const { amount } = req.body; // Amount in paise (e.g., 30000 for ₹300)
+
+        const options = {
+            amount: amount, // Amount in paise
+            currency: 'INR',
+            receipt: `receipt_${Date.now()}`, // Unique receipt ID
+            payment_capture: 1, // Auto-capture payment
+        };
+
+        // Create a Razorpay order
+        const order = await razorpay.orders.create(options);
+
+        res.status(200).json({
+            success: true,
+            order,
+        });
+    } catch (error) {
+        console.error('Error creating Razorpay order:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to create Razorpay order',
+        });
+    }
+});
+
+// Handle Payment Confirmation
+app.post('/confirm-payment', async (req, res) => {
+    try {
+        // Retrieve temporary user data from session
+        const tempUser = req.session.tempUser;
+        if (!tempUser) {
+            return res.status(404).send("User data not found.");
+        }
+
+        // Save the user data to the database
+        const newUser = new User(tempUser);
+        await newUser.save();
+
+        // Clear the temporary user data from session
+        delete req.session.tempUser;
+
+        res.redirect('/payment-success');
+    } catch (error) {
+        console.error("Payment Confirmation Error:", error);
+        res.status(500).send("Error confirming payment.");
+    }
+});
+
+// Route for payment success page
+app.get('/payment-success', (req, res) => {
+    res.render('payment-success'); // Render a success page
 });
 
 // 404 Handler

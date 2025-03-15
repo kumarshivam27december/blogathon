@@ -19,7 +19,6 @@
                 <li><a href="/register">Register</a></li>
                 <li><a href="/rules">Rules</a></li>
                 <li><a href="/contact">Contact</a></li>
-
                 <li><a href="/about">About</a></li>
                 <li><a href="/admin/login">Admin Login</a></li>
             </ul>
@@ -37,7 +36,7 @@
                     <p><strong>Gender:</strong> <%= user.gender %></p>
                     <p><strong>LPU Student:</strong> <%= user.isLpuStudent ? 'Yes' : 'No' %></p>
                     <p><strong>Registration No:</strong> <%= user.registrationNo || 'N/A' %></p>
-                    <p><strong>Accommodation:</strong> <%= user.accommodation || 'N/A' %></p> <!-- Display accommodation -->
+                    <p><strong>Accommodation:</strong> <%= user.accommodation || 'N/A' %></p>
                     <p><strong>Participation Type:</strong> <%= user.participationType %></p>
                     <% if (user.participationType === 'team' && user.teamMembers && user.teamMembers.length > 0) { %>
                         <p><strong>Team Members:</strong></p>
@@ -47,11 +46,9 @@
                             <% }); %>
                         </ul>
                     <% } %>
+                    <p><strong>Total Amount to Pay:</strong> ₹<%= user.price || 0 %></p> <!-- Display price or default to 0 -->
                 </div>
-                <form action="/confirm-payment" method="POST">
-                    <input type="hidden" name="userId" value="<%= user._id %>">
-                    <button type="submit" class="btn primary-btn">Confirm Payment</button>
-                </form>
+                <button id="payButton" class="btn primary-btn">Pay Now</button>
             </div>
         </div>
     </section>
@@ -88,6 +85,70 @@
         </div>
     </footer>
 
-    <script src="/js/script.js"></script>
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        async function handlePayment() {
+            const amount = <%= user.price * 100 %>; // Convert to paise
+            console.log("Amount being sent:", amount); // Debugging: Log the amount
+
+            const response = await fetch('/create-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: Number(amount) }), // Ensure amount is a number
+            });
+
+            const data = await response.json();
+            console.log("Razorpay order response:", data); // Debugging: Log the response
+
+            if (!data.success) {
+                alert('Failed to create Razorpay order');
+                return;
+            }
+
+            const options = {
+                key: '<%= process.env.RAZORPAY_KEY_ID %>', // Razorpay key_id
+                amount: data.order.amount, // Amount in paise
+                currency: 'INR',
+                name: 'Blogathon',
+                description: 'Registration Payment',
+                order_id: data.order.id, // Razorpay order ID
+                handler: async function (response) {
+                    // Handle successful payment
+                    alert('Payment successful!');
+
+                    // Send payment confirmation to the server
+                    const confirmResponse = await fetch('/confirm-payment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({}), // No need to send user ID, as it's stored in session
+                    });
+
+                    if (confirmResponse.ok) {
+                        window.location.href = '/payment-success'; // Redirect to success page
+                    } else {
+                        alert('Failed to confirm payment.');
+                    }
+                },
+                prefill: {
+                    name: '<%= user.name %>',
+                    email: '<%= user.email %>',
+                    contact: '<%= user.mobile %>',
+                },
+                theme: {
+                    color: '#007bff',
+                },
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        document.getElementById('payButton').addEventListener('click', handlePayment);
+    </script>
 </body>
 </html>

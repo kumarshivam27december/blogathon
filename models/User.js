@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   teamName: String,
   teamMembers: [teamMemberSchema],
   photo: { type: String, required: true }, // New field for photo
+  price: { type: Number, required: true }, // Add this field
   paymentStatus: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
