@@ -30,6 +30,12 @@
             background-color: #ccc;
             cursor: not-allowed;
         }
+        .form-group input[type="file"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +58,7 @@
     <section class="section">
         <div class="container">
             <h2>Register Now</h2>
-            <form class="registration-form" action="/register" method="POST">
+            <form class="registration-form" action="/register" method="POST" enctype="multipart/form-data">
                 <!-- Name -->
                 <div class="form-group">
                     <label for="name">Full Name</label>
@@ -80,6 +86,12 @@
                         <input type="radio" id="female" name="gender" value="female">
                         <label for="female">Female</label>
                     </div>
+                </div>
+
+                <!-- Photo Upload -->
+                <div class="form-group">
+                    <label for="photo">Upload Photo (Mandatory)</label>
+                    <input type="file" id="photo" name="photo" accept="image/*" required>
                 </div>
 
                 <!-- LPU Student -->

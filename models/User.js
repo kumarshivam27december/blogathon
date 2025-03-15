@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
   participationType: String,
   teamName: String,
   teamMembers: [teamMemberSchema],
+  photo: { type: String, required: true }, // New field for photo
   paymentStatus: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });

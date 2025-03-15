@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
 const nodemailer = require('nodemailer'); // Import Nodemailer
+const fs = require('fs'); // Import fs module for directory creation
 
 const app = express();
 const PORT = process.env.PORT || 5000; // Use PORT from .env or default to 3000
@@ -39,7 +40,16 @@ app.use(session({
 // View engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Ensure the 'public/uploads' directory exists
+const uploadsDir = path.join(__dirname, 'public/uploads');
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    console.log('Uploads directory created:', uploadsDir);
+}
 
 // Import models
 const User = require('./models/User'); // Your existing User schema

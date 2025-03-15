@@ -1,6 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const multer = require('multer');
+const path = require('path');
+
+// Configure multer for file uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads/'); // Save files in the 'public/uploads' directory
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname)); // Unique filename
+  }
+});
+
+const upload = multer({ storage });
 
 // Home Page
 router.get('/', (req, res) => {
@@ -12,12 +27,12 @@ router.get('/about', (req, res) => {
   res.render('about');
 });
 
-// About Page
+// Rules Page
 router.get('/rules', (req, res) => {
   res.render('rules');
 });
 
-
+// Contact Page
 router.get('/contact', (req, res) => {
   res.render('contact');
 });
@@ -27,13 +42,15 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 
-// Registration Handler
-router.post('/register', async (req, res) => {
+// Registration Handler with Photo Upload
+router.post('/register', upload.single('photo'), async (req, res) => {
   try {
-      // console.log(req.body); // Debug: Log the request body
-      const { name, email, mobile, gender, isLpuStudent, registrationNo, accommodation, participationType, teamName, teamMembers } = req.body;
+      console.log("Uploaded file:", req.file); // Debug: Check if file is uploaded
+      if (!req.file) {
+          throw new Error("No file uploaded.");
+      }
 
-      console.log("Accommodation:", accommodation); // Debug: Log the accommodation value
+      const { name, email, mobile, gender, isLpuStudent, registrationNo, accommodation, participationType, teamName, teamMembers } = req.body;
 
       // Format team members if in a team
       let formattedTeamMembers = [];
@@ -45,6 +62,9 @@ router.post('/register', async (req, res) => {
           }));
       }
 
+      const photoPath = req.file.path.replace('public', '');
+
+
       const newUser = new User({
           name,
           email,
@@ -52,10 +72,11 @@ router.post('/register', async (req, res) => {
           gender,
           isLpuStudent: isLpuStudent === 'yes',
           registrationNo,
-          accommodation, // Ensure this is included
+          accommodation,
           participationType,
           teamName: participationType === "team" ? teamName : null,
-          teamMembers: formattedTeamMembers
+          teamMembers: formattedTeamMembers,
+          photo: photoPath // Save the file path of the uploaded photo
       });
 
       await newUser.save();
@@ -64,8 +85,6 @@ router.post('/register', async (req, res) => {
       res.status(400).send("Registration failed: " + error.message);
   }
 });
-
-
 
 // Payment Page
 router.get('/payment', async (req, res) => {
@@ -113,4 +132,4 @@ router.post('/confirm-payment', async (req, res) => {
   }
 });
 
-module.exports = router; // Export the router
+module.exports = router;

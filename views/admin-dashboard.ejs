@@ -171,7 +171,18 @@
                 margin-bottom: 10px;
             }
         }
+
+        /* Updated CSS for user photos */
+        .user-photo {
+            width: 300px; /* Twice the previous width */
+            height: 300px; /* Twice the previous height */
+            border-radius: 10px; /* Optional: Slightly rounded corners */
+            object-fit: cover; /* Ensures the image covers the area without distortion */
+            border: 2px solid #ddd; /* Optional: Adds a border around the photo */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+        }
     </style>
+</head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
@@ -183,7 +194,6 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/rules">Rules</a></li>
                 <li><a href="/contact">Contact</a></li>
-
                 <li><a href="/admin/dashboard">Dashboard</a></li>
                 <li><a href="/admin/logout">Logout</a></li>
             </ul>
@@ -214,12 +224,13 @@
             <table id="userTable">
                 <thead>
                     <tr>
+                        <th>Photo</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Mobile</th>
                         <th>LPU Student</th>
                         <th>Registration No</th>
-                        <th>Accommodation</th> <!-- New column for accommodation -->
+                        <th>Accommodation</th>
                         <th>Registered At</th>
                         <th>Team Member</th>
                     </tr>
@@ -227,12 +238,20 @@
                 <tbody>
                     <% users.forEach(user => { %>
                         <tr>
+                            <td>
+                                <% if (user.photo) { %>
+                                    <!-- Use the correct URL for the photo -->
+                                    <img src="<%= user.photo %>" alt="User Photo" class="user-photo">
+                                <% } else { %>
+                                    N/A
+                                <% } %>
+                            </td>
                             <td><%= user.name %></td>
                             <td><%= user.email %></td>
                             <td><%= user.mobile %></td>
                             <td><%= user.isLpuStudent ? 'Yes' : 'No' %></td>
                             <td><%= user.registrationNo || 'N/A' %></td>
-                            <td><%= user.accommodation || 'N/A' %></td> <!-- Display accommodation -->
+                            <td><%= user.accommodation || 'N/A' %></td>
                             <td><%= user.createdAt.toLocaleString() %></td>
                             <td>
                                 <% if (user.participationType === 'team' && user.teamMembers && user.teamMembers.length > 0) { %>
@@ -273,6 +292,8 @@
                 return Array.from(row.cells).map(cell => {
                     if (cell.querySelector("ul")) {
                         return Array.from(cell.querySelectorAll("li")).map(li => li.textContent).join(" | ");
+                    } else if (cell.querySelector("img")) {
+                        return cell.querySelector("img").src; // Include photo URL in CSV
                     } else {
                         return cell.textContent;
                     }
