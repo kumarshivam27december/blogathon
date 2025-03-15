@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blogathon - Home</title>
+    <title>Pradyut Foundation - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
@@ -18,10 +18,9 @@
             </div>
             <ul class="nav-links">
                 <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li> <!-- Add this line -->
+                <li><a href="/about">About</a></li>
                 <li><a href="/rules">Rules</a></li>
                 <li><a href="/contact">Contact</a></li>
-
                 <li><a href="/register">Register</a></li>
                 <li><a href="/admin/login">Admin Login</a></li>
             </ul>
@@ -43,6 +42,232 @@
             </div>
             <div class="cta-buttons">
                 <a href="/register" class="btn primary-btn">Register Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section from about.ejs -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2>About the Event</h2>
+            <p>Type Till Sunrise is not just another blogging 
+                contest — it’s a creative showdown under the stars that 
+                blends the excitement of a hackathon with the flair of 
+                creative writing. This unique overnight inter-university 
+                blogathon is designed to push your creative limits while 
+                testing your speed, adaptability, and teamwork in a 
+                high-pressure, high-energy environment. <br> <br>
+                Unlike traditional competitions, Type Till Sunrise 
+                unfolds over the course of a 12-hour overnight marathon. From 
+                sunset to sunrise, teams will work together to brainstorm, draft, 
+                refine, and present creative blogs across multiple dynamic rounds. 
+                Each round brings new challenges, unexpected twists, and a chance 
+                for your team to shine.
+            </p>
+        </div>
+    </section>
+
+    <!-- Rounds Section from about.ejs -->
+    <section id="rounds" class="section">
+        <div class="container">
+            <h2>Competition Rounds</h2>
+            <div class="rounds-container">
+                <div class="round-card-animated">
+                    <div class="round-front">
+                        <div class="round-icon">
+                            <i class="fas fa-pen-fancy"></i>
+                        </div>
+                        <h3>Round 1: Topic Takedown</h3>
+                        <p class="round-brief">Teams will select a predefined topic (first-come, first-served, max 5 teams per topic) 
+                            and write a well-structured blog within 2 hours. The blog will be evaluated for relevance (auto-checked), 
+                            originality (manual plagiarism check), and content quality. Submissions must be in Word format (.docx).</p>
+                        <button class="learn-more-btn">Learn More</button>
+                    </div>
+                    <div class="round-back">
+                        <h4>Topic Takedown Details</h4>
+                        <ul class="round-details">
+                            <li><i class="fas fa-clock"></i> Duration: 2 hours</li>
+                            <li><i class="fas fa-tasks"></i> Word Limit: 800-1000 words</li>
+                        </ul>
+                        <div class="round-description">
+                            <p>Choose from limited topic slots and create a compelling blog post. Topics will be revealed at the start of the round.</p>
+                            <h5>Judging Criteria:</h5>
+                            <ul>
+                                <li>Content Quality (40%)</li>
+                                <li>Creativity (30%)</li>
+                                <li>Structure (20%)</li>
+                                <li>Language (10%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="round-card-animated">
+                    <div class="round-front">
+                        <div class="round-icon">
+                            <i class="fas fa-headphones"></i>
+                        </div>
+                        <h3>Round 2: Audible to Article</h3>
+                        <p class="round-brief">A typing speed challenge where one team member 
+                            transcribes an audio clip in real time. The system will auto-calculate typing speed (WPM) 
+                            and accuracy, with deductions for spelling errors. The winner will be announced immediately 
+                            and awarded a medal and certificate on the spot.</p>
+                        <button class="learn-more-btn">Learn More</button>
+                    </div>
+                    <div class="round-back">
+                        <h4>Audible to Article Details</h4>
+                        <ul class="round-details">
+                            <li><i class="fas fa-clock"></i> Duration: 1 hour</li>
+                            <li><i class="fas fa-keyboard"></i> Min WPM: 40</li>
+                        </ul>
+                        <div class="round-description">
+                            <p>Listen to audio content and transform it into a well-structured article while maintaining accuracy and adding creative elements.</p>
+                            <h5>Judging Criteria:</h5>
+                            <ul>
+                                <li>Accuracy (40%)</li>
+                                <li>Formatting (30%)</li>
+                                <li>Speed (20%)</li>
+                                <li>Enhancement (10%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="round-card-animated">
+                    <div class="round-front">
+                        <div class="round-icon">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <h3>Round 3: Eyes Shut, Words Flow</h3>
+                        <p class="round-brief">One team member dictates, and another blindfolded member types in a live text box. 
+                            The system will automatically check spelling accuracy, typing speed, and topic relevance. The most 
+                            accurate and fastest team will be declared winners immediately and awarded a medal and certificate.</p>
+                        <button class="learn-more-btn">Learn More</button>
+                    </div>
+                    <div class="round-back">
+                        <h4>Eyes Shut, Words Flow Details</h4>
+                        <ul class="round-details">
+                            <li><i class="fas fa-clock"></i> Duration: 1.5 hours</li>
+                            <li><i class="fas fa-users"></i> Team Coordination Required</li>
+                        </ul>
+                        <div class="round-description">
+                            <p>One team member dictates while another types with eyes closed, testing trust and coordination.</p>
+                            <h5>Judging Criteria:</h5>
+                            <ul>
+                                <li>Typing Accuracy (35%)</li>
+                                <li>Team Coordination (30%)</li>
+                                <li>Content Quality (25%)</li>
+                                <li>Time Management (10%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="round-card-animated">
+                    <div class="round-front">
+                        <div class="round-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3>Round 4: The Creator's Arena</h3>
+                        <p class="round-brief">Teams will choose their own topic (unique per team) and submit both a blog and 
+                            a 2-minute pitch video. The system will auto-check relevance, while judges evaluate content quality 
+                            and presentation. </p>
+                        <button class="learn-more-btn">Learn More</button>
+                    </div>
+                    <div class="round-back">
+                        <h4>Creator's Arena Details</h4>
+                        <ul class="round-details">
+                            <li><i class="fas fa-clock"></i> Duration: 5 hours total</li>
+                            <li><i class="fas fa-file-alt"></i> Word Limit: 1200 words</li>
+                        </ul>
+                        <div class="round-description">
+                            <p>Create a comprehensive blog with multimedia elements and present through a pitch video.</p>
+                            <h5>Sub-rounds:</h5>
+                            <ul>
+                                <li>Ideation & Writing (3 hours)</li>
+                                <li>Visual Enhancement (1 hour)</li>
+                                <li>Video Pitch (1 hour)</li>
+                            </ul>
+                            <h5>Judging Criteria:</h5>
+                            <ul>
+                                <li>Content Quality (30%)</li>
+                                <li>Visual Appeal (25%)</li>
+                                <li>Presentation (25%)</li>
+                                <li>Innovation (20%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section from about.ejs -->
+    <section id="timeline" class="section">
+        <div class="container">
+            <h2>Event Timeline</h2>
+            <div class="timeline-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Round</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>6:00 PM - 6:30 PM</td>
+                            <td>Inauguration</td>
+                            <td>Opening Ceremony, Team Allotment</td>
+                        </tr>
+                        <tr>
+                            <td>6:30 PM - 8:30 PM</td>
+                            <td>Round 1: Simple Blogging</td>
+                            <td>Topic Selection + Blogging</td>
+                        </tr>
+                        <tr>
+                            <td>8:30 PM - 9:00 PM</td>
+                            <td>Break</td>
+                            <td>Snacks & Tea</td>
+                        </tr>
+                        <tr>
+                            <td>9:00 PM - 10:00 PM</td>
+                            <td>Round 2: Fast Finger First</td>
+                            <td>Typing Challenge</td>
+                        </tr>
+                        <tr>
+                            <td>10:00 PM - 11:30 PM</td>
+                            <td>Round 3: Blind Blogging</td>
+                            <td>Dictation + Blind Typing</td>
+                        </tr>
+                        <tr>
+                            <td>11:30 PM - 12:00 AM</td>
+                            <td>Break</td>
+                            <td>Refreshments</td>
+                        </tr>
+                        <tr>
+                            <td>12:00 AM - 3:00 AM</td>
+                            <td>Round 4: Creativity</td>
+                            <td>Ideation + Writing (1200 Words Draft)</td>
+                        </tr>
+                        <tr>
+                            <td>3:00 AM - 4:00 AM</td>
+                            <td>Round 4: Enhancement</td>
+                            <td>Add Images, Beautify</td>
+                        </tr>
+                        <tr>
+                            <td>4:00 AM - 5:00 AM</td>
+                            <td>Round 4: Presentation</td>
+                            <td>Record Pitch Video</td>
+                        </tr>
+                        <tr>
+                            <td>5:00 AM - 6:00 AM</td>
+                            <td>Judging + Results</td>
+                            <td>Announcement & Prize Distribution</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>
